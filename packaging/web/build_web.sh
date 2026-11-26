@@ -197,7 +197,7 @@ while IFS= read -r option; do
   test -n "$option" && WEB_LINK_ARGS+=("$option")
 done < "$WEB_LINK_OPTIONS"
 cmake --build "$B" --target gbarecomp_runtime gbarecomp_debug gbarecomp_gba \
-  gbarecomp_armv4t gbarecomp_recompile_core gbarecomp_heal_gate -- -j"$JOBS"
+  gbarecomp_armv4t gbarecomp_recompile_core gbarecomp_heal_gate gbarecomp_rom_input -- -j"$JOBS"
 
 echo "== game library (wasm, pthreads) -> $GAME_BUILD"
 grep -q -- "-mtail-call" "$PROJECT/CMakeLists.txt" || {
@@ -216,7 +216,7 @@ em++ -O2 -std=c++20 \
   -Wl,--start-group \
     "$B/libgbarecomp_runtime.a" "$B/libgbarecomp_debug.a" "$B/libgbarecomp_gba.a" \
     "$B/libgbarecomp_armv4t.a" "$B/libgbarecomp_recompile_core.a" \
-    "$B/libgbarecomp_heal_gate.a" "$GAME_BUILD/libgbarecomp_game.a" \
+    "$B/libgbarecomp_heal_gate.a" "$B/libgbarecomp_rom_input.a" "$GAME_BUILD/libgbarecomp_game.a" \
   -Wl,--end-group \
   "${WEB_LINK_ARGS[@]}" \
   -o "$OUT/game.js"

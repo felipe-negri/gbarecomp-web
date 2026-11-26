@@ -86,3 +86,6 @@ recomp_cache/
 signing.local.properties
 *.jks
 *.keystore
+games/
+tools/emsdk/
+build-web-host/

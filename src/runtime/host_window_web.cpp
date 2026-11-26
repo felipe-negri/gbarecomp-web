@@ -450,6 +450,7 @@ void HostWindow::set_integer_scale(bool) {}
 bool HostWindow::integer_scale() const { return false; }
 void HostWindow::set_scanlines(bool, int) {}
 bool HostWindow::scanlines() const { return false; }
+bool HostWindow::saved_audio_enhanced(bool&) const { return false; }  // web: no config.ini
 int HostWindow::scanline_strength() const { return 35; }
 void HostWindow::set_resize_driven_view(bool v){if(impl_)backend(impl_)->resize=v;}
 bool HostWindow::assist_tools_enabled()const{return impl_&&backend(impl_)->assist;}
