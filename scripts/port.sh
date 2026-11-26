@@ -46,5 +46,9 @@ rm -f "$out"/*.symbols
 # instância própria: ROM/BIOS já embutidas, então começa sozinho (?autostart=0 desliga)
 sed -i "s/q.get('autostart')==='1'/q.get('autostart')!=='0'/" "$out/bootstrap.js"
 grep -q "q.get('autostart')!=='0'" "$out/bootstrap.js" || { echo "erro: não achei o autostart no bootstrap.js" >&2; exit 1; }
+# gravação de diagnóstico (replay de até 256 MiB na memória) desligada por padrão no hub
+sed -i "s/const env={};for(const item/const env={GBARECOMP_DIAGNOSTICS:'0'};for(const item/" "$out/bootstrap.js"
+grep -q "GBARECOMP_DIAGNOSTICS:'0'" "$out/bootstrap.js" || { echo "erro: não achei o env no bootstrap.js" >&2; exit 1; }
+python3 "$root/scripts/hub-page.py" "$out/index.html"
 rm -rf "$work/project"   # C++ gerado é grande e sai de novo a cada build
 echo "== pronto: $out"

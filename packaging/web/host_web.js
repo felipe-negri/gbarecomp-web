@@ -23,7 +23,7 @@ for(let n=1;n<=9;++n)SLOT_BINDINGS.push({command:'Load',slot:n,binding:'F'+n},{c
 const PAD_BUTTONS=[['a','A',1],['b','B',2],['select','Select',4],['start','Start',8],['r','R',256],['l','L',512]];
 const DPAD={right:16,left:32,up:64,down:128};
 const gcd=(a,b)=>b?gcd(b,a%b):a;
-function layout(dw,dh,w,h){const g=gcd(w,h),u=Math.floor(Math.min(dw/(w/g),dh/(h/g)));return {x:Math.floor((dw-u*w/g)/2),y:Math.floor((dh-u*h/g)/2),w:u*w/g,h:u*h/g,integer:u%g===0};}
+function layout(dw,dh,w,h){if(globalThis.GbrStretch)return {x:0,y:0,w:dw,h:dh,integer:false};const g=gcd(w,h),u=Math.floor(Math.min(dw/(w/g),dh/(h/g)));return {x:Math.floor((dw-u*w/g)/2),y:Math.floor((dh-u*h/g)/2),w:u*w/g,h:u*h/g,integer:u%g===0};}
 // "Ctrl+Shift+KeyX" -> {code:'KeyX',Ctrl:true,Alt:false,Shift:true,count:2}
 function parseBinding(text){
   if(!text)return null;
